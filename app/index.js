@@ -1,13 +1,14 @@
-import { Image, Platform, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import Constant from 'expo-constants'
+import Constant from 'expo-constants';
 import { Link } from "expo-router";
+import { Image, Platform, ScrollView, Text } from "react-native";
 
 export default function Page() {
   return (
-    <SafeAreaView
+    <ScrollView
       style={{
-        paddingTop : Platform.OS === 'android' ? Constant.statusBarHeight : 0
+        paddingTop: Platform.OS === 'android' ? Constant.statusBarHeight : 0
       }}
+      className='flex-1 bg-white'
     >
       <Image
         source={require('../assets/logo.png')}
@@ -23,6 +24,6 @@ export default function Page() {
       >
         <Text>Add Employee</Text>
       </Link>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
