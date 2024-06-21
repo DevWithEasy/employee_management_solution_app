@@ -24,6 +24,16 @@ export default function Page() {
       >
         <Text>Add Employee</Text>
       </Link>
+      <Link
+        href='/attendance'
+      >
+        <Text>Attendance</Text>
+      </Link>
+      <Link
+        href='/salary'
+      >
+        <Text>Salary</Text>
+      </Link>
     </ScrollView>
   );
 }
