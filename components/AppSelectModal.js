@@ -22,6 +22,15 @@ export default function AppSelectModal({
           className='w-11/12 h-[350px] mx-auto bg-white rounded overflow-y-auto'
         >
           <ScrollView>
+            <TouchableOpacity
+              className='p-4 border-b border-gray-200'
+              onPress={() => {
+                onChange({});
+                setVisible(false);
+              }}
+            >
+              <AppText>Select none</AppText>
+            </TouchableOpacity>
             {
               data.map((item, index) =>
                 <TouchableOpacity

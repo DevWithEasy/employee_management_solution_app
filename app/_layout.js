@@ -38,7 +38,8 @@ export default function RootLayout() {
             <Stack.Screen
                 name='attendance'
                 options={{
-                    title: 'Attendance Taker'
+                    title: 'Attendance Taker',
+                    headerBlurEffect : true
                 }}
             />
         </Stack>

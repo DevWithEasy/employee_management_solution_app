@@ -9,7 +9,7 @@ export default function AppButton({title, textStyle,btnStyle,onPress}) {
         className={cn('p-2',btnStyle)}
     >
       <Text
-        className={cn(textStyle)}
+        className={cn('w-full',textStyle)}
       >
         {title}
         </Text>

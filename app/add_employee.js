@@ -6,27 +6,30 @@ import AppButton from "../components/AppButton";
 import getId from "../utils/getId";
 import AppText from "../components/AppText";
 import AppInput from "../components/AppInput";
+import RNDateTimePicker from '@react-native-community/datetimepicker';
+import getDate from "../utils/getDate";
 
 export default function AddEmployee() {
-    const [sections, setSections] = useState([]);
-    const [designations, setDesignations] = useState([]);
-    const [visible, setVisible] = useState(false);
-    const [field, setField] = useState("");
-    const [section, setSection] = useState("");
-    const [id, setId] = useState("");
-    const [name, setName] = useState("");
-    const [salary, setSalary] = useState("");
-    const [nid, setNID] = useState("");
-    const [joining, setJoining] = useState("");
-    const [phone, setPhone] = useState("");
-    const [designation, setDesignation] = useState("");
-    const [quarter, setQuarter] = useState("");
-    const [meal, setMeal] = useState("");
+    const [sections, setSections] = useState([])
+    const [designations, setDesignations] = useState([])
+    const [visible, setVisible] = useState(false)
+    const [dateVisible, setDateVisible] = useState(false)
+    const [field, setField] = useState("")
+    const [section, setSection] = useState("")
+    const [id, setId] = useState("")
+    const [name, setName] = useState("")
+    const [salary, setSalary] = useState("")
+    const [nid, setNID] = useState("")
+    const [joining, setJoining] = useState(new Date())
+    const [phone, setPhone] = useState("")
+    const [designation, setDesignation] = useState("")
+    const [quarter, setQuarter] = useState("")
+    const [meal, setMeal] = useState("")
     const handleSectionChange = (item) => {
         const section = sections.find((section) => section.name === item.value);
-        setSection(section);
-        console.log(section);
-        setId(section.code + "-" + getId(section.total));
+        setSection(section)
+        console.log(section)
+        setId(section.code + "-" + getId(section.total))
     };
 
     const data =
@@ -57,9 +60,33 @@ export default function AddEmployee() {
                     : setMeal(item.value);
     };
 
-    const handleSubmit=()=>{
-        const url = `${api_endpoint}?v=add_employee`
+    const handleSubmit = () => {
+        const url = `${api_endpoint}?v=add_employee&section=${section.name}&section_row=${section.row}&section_col=${section.col}&id=${id}&name=${name}&joining_date=${getDate(joining)}&designation=${designation}&mobile=${phone}&nid=${nid}&salary=${salary}&quarter=${quarter}&meal=${meal}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setSections(sections.map(s => s.code === section.code ? {...s, total : s.total + 1} : s))
+                setSection('')
+                setId('')
+                setName('')
+                setPhone('')
+                setNID('')
+                setSalary('')
+                setDesignation('')
+                setQuarter('')
+                setMeal('')
+                setJoining(new Date())
+            })
+            .catch(err => console.error(err))
     }
+    const onChange = (event, date) => {
+        if (event.type === 'set') {
+            setDateVisible(false)
+            setJoining(date)
+        } else {
+            setDateVisible(false)
+        }
+    };
 
     useEffect(() => {
         fetch(`${api_endpoint}?v=section_designation`)
@@ -75,40 +102,44 @@ export default function AddEmployee() {
             <View className="flex-row space-x-2">
                 <AppButton
                     title={section ? section.name : "Select Section"}
-                    btnStyle="w-1/2 border border-gray-200 rounded"
+                    btnStyle="w-1/2 py-3 border border-gray-200 rounded"
                     onPress={() => {
                         setField("section");
                         setVisible(true);
                     }}
                 />
-                <AppText styles="w-1/2 pt-1 justify-center items-center text-center bg-gray-100 text-lg rounded">
+                <AppText styles="w-1/2 pt-2 justify-center items-center text-center bg-gray-100 text-lg rounded">
                     {id}
                 </AppText>
             </View>
             <View className="py-2">
                 <AppInput
+                    value={name}
                     placeholder="Name"
-                    styles="p-1 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 border-gray-200 rounded"
                     onChangeText={(text) => setName(text)}
                 />
                 <AppInput
+                    value={phone}
                     placeholder="Phone"
-                    styles="p-1 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 border-gray-200 rounded"
                     onChangeText={(text) => setPhone(text)}
                 />
                 <AppInput
+                    value={nid}
                     placeholder="NID"
-                    styles="p-1 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 border-gray-200 rounded"
                     onChangeText={(text) => setNID(text)}
                 />
                 <AppInput
+                    value={salary}
                     placeholder="Salary"
-                    styles="p-1 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 border-gray-200 rounded"
                     onChangeText={(text) => setSalary(text)}
                 />
                 <AppButton
                     title={designation ? designation : "Select designation"}
-                    btnStyle="my-1 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 border border-gray-200 rounded"
                     onPress={() => {
                         setField("designation");
                         setVisible(true);
@@ -116,7 +147,7 @@ export default function AddEmployee() {
                 />
                 <AppButton
                     title={quarter ? quarter : "Select Quarter service"}
-                    btnStyle="my-1 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 border border-gray-200 rounded"
                     onPress={() => {
                         setField("quarter");
                         setVisible(true);
@@ -124,19 +155,30 @@ export default function AddEmployee() {
                 />
                 <AppButton
                     title={meal ? meal : "Select Meal service"}
-                    btnStyle="my-1 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 border border-gray-200 rounded"
                     onPress={() => {
                         setField("meal");
                         setVisible(true);
                     }}
                 />
                 <AppButton
+                    title={joining ? getDate(joining) : 'Joining date'}
+                    btnStyle="my-1 py-3 border border-gray-200 rounded"
+                    onPress={() => setDateVisible(true)}
+                />
+
+                <AppButton
                     title="Submit"
-                    btnStyle="my-1 bg-blue-500 rounded-full"
+                    btnStyle="my-1 py-3 bg-blue-500 rounded-full"
                     textStyle="text-white text-center"
-                    onPress={() => { }}
+                    onPress={handleSubmit}
                 />
             </View>
+            {dateVisible &&
+                <RNDateTimePicker
+                    value={joining}
+                    onChange={onChange}
+                />}
             <AppSelectModal
                 data={data}
                 visible={visible}
