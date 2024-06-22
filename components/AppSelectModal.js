@@ -14,6 +14,8 @@ export default function AppSelectModal({
       visible={visible}
       onRequestClose={() => setVisible(false)}
       animationType="fade"
+      statusBarTranslucent
+      transparent={true}
     >
       <View
         className='flex-1 justify-center items-center bg-gray-500/50'

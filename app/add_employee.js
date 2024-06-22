@@ -9,8 +9,11 @@ import AppInput from "../components/AppInput";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import getDate from "../utils/getDate";
 import ImageBackgroundScreen from "../components/ImageBackgroundScreen";
+import useAppStore from "../store/useStore";
+import Loading from "../components/Loading";
 
 export default function AddEmployee() {
+    const {loading,setLoading} = useAppStore()
     const [sections, setSections] = useState([])
     const [designations, setDesignations] = useState([])
     const [visible, setVisible] = useState(false)
@@ -90,12 +93,18 @@ export default function AddEmployee() {
     };
 
     useEffect(() => {
+        setLoading()
         fetch(`${api_endpoint}?v=section_designation`)
             .then((res) => res.json())
             .then((data) => {
                 setSections(data.sections);
                 setDesignations(data.designations);
-            });
+                setLoading()
+            })
+            .catch(err=>{
+                console.log(err)
+                setLoading()
+            })
     }, []);
 
     return (
@@ -186,6 +195,10 @@ export default function AddEmployee() {
                 visible={visible}
                 setVisible={setVisible}
                 onChange={handleFieldChange}
+            />
+            <Loading
+                visible={loading}
+                setVisible={setLoading}
             />
         </ScrollView>
         </ImageBackgroundScreen>

@@ -1,5 +1,5 @@
 import Constant from 'expo-constants';
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Image, Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ui from '../assets/ui';
 import AppText from '../components/AppText';
@@ -61,7 +61,6 @@ export default function Page() {
           )
         }
       </View>
-
     </ScrollView>
     </ImageBackgroundScreen>
   );

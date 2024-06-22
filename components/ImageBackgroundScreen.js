@@ -7,6 +7,7 @@ export default function ImageBackgroundScreen({ children }) {
       source={require('../assets/bg.jpg')}
       className='flex-1'
       blurRadius={8}
+      resizeMode='cover'
     >
       {children}
     </ImageBackground>

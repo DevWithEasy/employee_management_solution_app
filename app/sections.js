@@ -3,14 +3,22 @@ import React, { useEffect, useState } from 'react'
 import api_endpoint from '../utils/api'
 import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
 import AppText from '../components/AppText'
+import useAppStore from '../store/useStore'
+import Loading from '../components/Loading'
 
 export default function Sections() {
+    const {loading,setLoading} = useAppStore()
     const [sections, setSections] = useState([])
     useEffect(() => {
+        setLoading()
         fetch(`${api_endpoint}?v=sections`)
             .then(res => res.json())
             .then(data => {
+                setLoading()
                 setSections(data)
+            })
+            .catch((error)=>{
+                setLoading()
             })
     }, [])
     console.log(sections)
@@ -63,7 +71,10 @@ export default function Sections() {
                         ))
                     }
                 </View>
-
+                <Loading
+                    visible={loading}
+                    setVisible={setLoading}
+                />
             </ScrollView>
         </ImageBackgroundScreen>
     )
