@@ -38,8 +38,13 @@ export default function RootLayout() {
             <Stack.Screen
                 name='attendance'
                 options={{
-                    title: 'Attendance Taker',
-                    headerBlurEffect : true
+                    title: 'Attendance Taker'
+                }}
+            />
+             <Stack.Screen
+                name='update'
+                options={{
+                    title: 'Update Employee'
                 }}
             />
         </Stack>

@@ -4,6 +4,8 @@ import api_endpoint from '../utils/api'
 import AppSearch from '../components/AppSearch'
 import AppText from '../components/AppText'
 import AppButton from '../components/AppButton'
+import AppAttendanceButton from '../components/AppAttendanceButton'
+import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
 
 export default function Attendance() {
     const [sections, setSections] = useState([])
@@ -26,6 +28,18 @@ export default function Attendance() {
             })
     }
 
+    const handleUpdateAttendence = (day,value) => {
+        fetch(`${api_endpoint}?v=update_attendence&section=${section.value}&row=${row}&col=${day.column}&value=${value}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setDays(days.map(day => day.column === data.data.col ? {...day,value : data.data.value} : day))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
         fetch(`${api_endpoint}?v=sections`)
             .then(res => res.json())
@@ -33,9 +47,10 @@ export default function Attendance() {
                 setSections(data)
             })
     }, [])
-    console.log(row, days, employee)
+    console.log(row)
     return (
-        <ScrollView className="p-4">
+        <ImageBackgroundScreen>
+            <ScrollView className="p-2">
             <AppSearch
                 data={sections.map(section => ({ value: section.name, label: section.name }))}
                 section={section}
@@ -44,69 +59,68 @@ export default function Attendance() {
                 id={id}
                 onSubmit={handleSubmit}
             />
-            <View>
-                <AppText>
-                    Name : {employee.name}
-                </AppText>
-                <AppText>
-                    Designation : {employee.designation}
-                </AppText>
-                <AppText>
-                    Salary : {employee.salary}
-                </AppText>
-            </View>
-            <View
-                className='space-y-2'
-            >
-                {
-                    days.map((day, i) =>
-                        <View
-                            key={i}
-                            className='p-1 flex-row justify-center bg-white rounded'
-                        >
-                            <View
-                                className='w-4/12 justify-center'
-                            >
-                                <AppText
-                                    styles='text-xl'
+            {
+                row &&
+                <>
+                    <View
+                        className='my-2 p-2 bg-white/50 rounded'
+                    >
+                        <AppText>
+                            Name : {employee.name}
+                        </AppText>
+                        <AppText>
+                            Designation : {employee.designation}
+                        </AppText>
+                        <AppText>
+                            Section : {section.label}
+                        </AppText>
+                        <AppText>
+                            ID : {id}
+                        </AppText>
+                    </View>
+                    <View
+                        className='p-2 pb-5 bg-white/50 space-y-2 rounded'
+                    >
+                        {
+                            days.map((day, i) =>
+                                <View
+                                    key={i}
+                                    className='p-1 flex-row justify-center bg-white/80 rounded'
                                 >
-                                    {i}
-                                </AppText>
-                            </View>
+                                    <View
+                                        className='w-4/12 justify-center items-center'
+                                    >
+                                        <AppText
+                                            styles='text-lg'
+                                        >
+                                            {i + 1}
+                                        </AppText>
+                                    </View>
 
-                            <View
-                            className='w-8/12 flex-row justify-between'
-                            >
-                                <TouchableOpacity
-                                    className={`w-10 h-10 items-center justify-center rounded-full ${day.value === '' ? 'bg-green-100' : 'bg-gray-100'}`}
-                                >
-                                    <Text></Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                className={`w-10 h-10 items-center justify-center rounded-full ${day.value === 'P' ? 'bg-green-100' : 'bg-gray-100'}`}
-                                >
-                                    <Text>P</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                className={`w-10 h-10 items-center justify-center rounded-full ${day.value === 'L' ? 'bg-green-100' : 'bg-gray-100'}`}
-                                >
-                                    <Text>L</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                className={`w-10 h-10 items-center justify-center rounded-full ${day.value === 'H' ? 'bg-green-100' : 'bg-gray-100'}`}
-                                >
-                                    <Text>H</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                className={`w-10 h-10 items-center justify-center rounded-full ${day.value === 'A' ? 'bg-green-100' : 'bg-gray-100'}`}
-                                >
-                                    <Text>A</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )
-                }
-            </View>
+                                    <View
+                                        className='w-8/12 flex-row justify-between'
+                                    >
+                                        {
+                                            ['', 'P', 'L', 'H', 'A']
+                                                .map((text, i) =>
+                                                    <AppAttendanceButton
+                                                        key={i}
+                                                        text={text}
+                                                        day={day}
+                                                        onChange={handleUpdateAttendence}
+                                                    />
+                                                )
+                                        }
+                                    </View>
+                                </View>
+                            )
+                        }
+                    </View>
+                </>
+            }
+
+
         </ScrollView>
+        </ImageBackgroundScreen>
     )
 }

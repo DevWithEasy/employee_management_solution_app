@@ -8,6 +8,7 @@ import AppText from "../components/AppText";
 import AppInput from "../components/AppInput";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import getDate from "../utils/getDate";
+import ImageBackgroundScreen from "../components/ImageBackgroundScreen";
 
 export default function AddEmployee() {
     const [sections, setSections] = useState([])
@@ -98,17 +99,18 @@ export default function AddEmployee() {
     }, []);
 
     return (
-        <ScrollView className="p-4 bg-white">
+        <ImageBackgroundScreen>
+            <ScrollView className="p-2">
             <View className="flex-row space-x-2">
                 <AppButton
                     title={section ? section.name : "Select Section"}
-                    btnStyle="w-1/2 py-3 border border-gray-200 rounded"
+                    btnStyle="w-1/2 py-3 bg-white/80 border border-gray-200 rounded"
                     onPress={() => {
                         setField("section");
                         setVisible(true);
                     }}
                 />
-                <AppText styles="w-1/2 pt-2 justify-center items-center text-center bg-gray-100 text-lg rounded">
+                <AppText styles="w-1/2 pt-2 justify-center items-center text-center bg-white/80 text-lg rounded">
                     {id}
                 </AppText>
             </View>
@@ -116,30 +118,30 @@ export default function AddEmployee() {
                 <AppInput
                     value={name}
                     placeholder="Name"
-                    styles="p-2 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 bg-white/80 border-gray-200 rounded"
                     onChangeText={(text) => setName(text)}
                 />
                 <AppInput
                     value={phone}
                     placeholder="Phone"
-                    styles="p-2 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 bg-white/80 border-gray-200 rounded"
                     onChangeText={(text) => setPhone(text)}
                 />
                 <AppInput
                     value={nid}
                     placeholder="NID"
-                    styles="p-2 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 bg-white/80 border-gray-200 rounded"
                     onChangeText={(text) => setNID(text)}
                 />
                 <AppInput
                     value={salary}
                     placeholder="Salary"
-                    styles="p-2 my-1 border-gray-200 rounded"
+                    styles="p-2 my-1 bg-white/80 border-gray-200 rounded"
                     onChangeText={(text) => setSalary(text)}
                 />
                 <AppButton
                     title={designation ? designation : "Select designation"}
-                    btnStyle="my-1 py-3 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 bg-white/80 border border-gray-200 rounded"
                     onPress={() => {
                         setField("designation");
                         setVisible(true);
@@ -147,7 +149,7 @@ export default function AddEmployee() {
                 />
                 <AppButton
                     title={quarter ? quarter : "Select Quarter service"}
-                    btnStyle="my-1 py-3 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 bg-white/80 border border-gray-200 rounded"
                     onPress={() => {
                         setField("quarter");
                         setVisible(true);
@@ -155,7 +157,7 @@ export default function AddEmployee() {
                 />
                 <AppButton
                     title={meal ? meal : "Select Meal service"}
-                    btnStyle="my-1 py-3 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 bg-white/80 border border-gray-200 rounded"
                     onPress={() => {
                         setField("meal");
                         setVisible(true);
@@ -163,7 +165,7 @@ export default function AddEmployee() {
                 />
                 <AppButton
                     title={joining ? getDate(joining) : 'Joining date'}
-                    btnStyle="my-1 py-3 border border-gray-200 rounded"
+                    btnStyle="my-1 py-3 bg-white/80 border border-gray-200 rounded"
                     onPress={() => setDateVisible(true)}
                 />
 
@@ -186,5 +188,6 @@ export default function AddEmployee() {
                 onChange={handleFieldChange}
             />
         </ScrollView>
+        </ImageBackgroundScreen>
     );
 }

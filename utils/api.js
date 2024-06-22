@@ -1,3 +1,3 @@
-const api_endpoint = 'https://script.google.com/macros/s/AKfycbwztMZdPaihXFzNV4wu9mbipqQEUTFhERB-mc7u_2so4ZYepL0dbE3MXH0hqEcSQzXG/exec'
+const api_endpoint = 'https://script.google.com/macros/s/AKfycbzj3hQA6vSPmzcBIB6_wTGLS2gEzTGkqO2lc9Oy2rn3UZbwe0D9u31622-nZT1DP64G/exec'
 
 export default api_endpoint

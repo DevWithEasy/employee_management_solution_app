@@ -15,7 +15,7 @@ export default function AppSearch({ data, section, setSection, id, setId, onSubm
     
     return (
         <View
-            className='p-2 border border-gray-300 rounded'
+            className='p-2 bg-white/70 border border-gray-200 rounded'
         >
             <AppButton
                 title={section.label ? section.label : 'Select Section'}
