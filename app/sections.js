@@ -21,7 +21,7 @@ export default function Sections() {
                 setLoading()
             })
     }, [])
-    console.log(sections)
+    
     return (
         <ImageBackgroundScreen>
             <ScrollView
