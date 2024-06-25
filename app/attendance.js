@@ -4,9 +4,9 @@ import AppAttendanceButton from '../components/AppAttendanceButton'
 import AppSearch from '../components/AppSearch'
 import AppText from '../components/AppText'
 import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
+import Loading from '../components/Loading'
 import useAppStore from '../store/useStore'
 import api_endpoint from '../utils/api'
-import Loading from '../components/Loading'
 
 export default function Attendance() {
     const {loading,setLoading} = useAppStore()
@@ -18,27 +18,34 @@ export default function Attendance() {
     const [days, setDays] = useState([])
 
     const handleSubmit = () => {
+        setLoading()
         fetch(`${api_endpoint}?v=attendence&section=${section.value}&id=${id}`)
             .then(res => res.json())
             .then(data => {
-                setRow(data.data.row_no)
-                setEmployee(data.data.employee)
-                setDays(data.data.days)
-                console.log(data)
+                const {row,section,info,days} = data.data
+                setSection({label : section, value : section})
+                setRow(row)
+                setEmployee(info)
+                setDays(days)
+                setLoading()
             })
             .catch(err => {
                 console.log(err)
+                setLoading()
             })
     }
 
     const handleUpdateAttendence = (day, value) => {
+        setLoading()
         fetch(`${api_endpoint}?v=update_attendence&section=${section.value}&row=${row}&col=${day.column}&value=${value}`)
             .then(res => res.json())
             .then(data => {
-                setDays(days.map(day => day.column === data.data.col ? { ...day, value: data.data.value } : day))
+                setDays(days.map(day => day.column === Number(data.data.col) ? { ...day, value: data.data.value } : day))
+                setLoading()
             })
             .catch(err => {
                 console.log(err)
+                setLoading()
             })
     }
 
@@ -51,7 +58,7 @@ export default function Attendance() {
                 setLoading()
             })
     }, [])
-
+    console.log(days)
     return (
         <ImageBackgroundScreen>
             <ScrollView className="p-2">

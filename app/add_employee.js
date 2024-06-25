@@ -30,10 +30,14 @@ export default function AddEmployee() {
     const [quarter, setQuarter] = useState("")
     const [meal, setMeal] = useState("")
     const handleSectionChange = (item) => {
-        const section = sections.find((section) => section.name === item.value);
-        setSection(section)
-        console.log(section)
-        setId(section.code + "-" + getId(section.total))
+        if(item.value){
+            const section = sections.find((section) => section.name === item.value);
+            setSection(section)
+            setId(section.code + "-" + getId(section.total))
+        }else{
+            setSection('')
+            setId('')
+        }
     };
 
     const data =
@@ -65,6 +69,7 @@ export default function AddEmployee() {
     };
 
     const handleSubmit = () => {
+        setLoading()
         const url = `${api_endpoint}?v=add_employee&section=${section.name}&section_row=${section.row}&section_col=${section.col}&id=${id}&name=${name}&joining_date=${getDate(joining)}&designation=${designation}&mobile=${phone}&nid=${nid}&salary=${salary}&quarter=${quarter}&meal=${meal}`
         fetch(url)
             .then(res => res.json())
@@ -80,8 +85,12 @@ export default function AddEmployee() {
                 setQuarter('')
                 setMeal('')
                 setJoining(new Date())
+                setLoading()
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+                console.error(err)
+                setLoading()
+            })
     }
     const onChange = (event, date) => {
         if (event.type === 'set') {

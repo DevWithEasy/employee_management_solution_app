@@ -21,6 +21,13 @@ const ui = [
         textColor : '#ca8a04',
     },
     {
+        title : 'Section Transfer',
+        image : require('../assets/transfer.png'),
+        path : '/transfer',
+        bgColor : '#fefce8',
+        textColor : '#ca8a04',
+    },
+    {
         title : 'Attendance',
         image : require('../assets/attendance.png'),
         path : '/attendance',
