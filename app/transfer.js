@@ -31,13 +31,16 @@ export default function Update() {
                     },
                     {
                         text: 'Confirm', onPress: () => {
+                            setLoading()
                             fetch(`${api_endpoint}?v=transfer&from=${from.value}&to=${to.value}&id=${id}`)
                                 .then(res => res.json())
                                 .then(data => {
                                     console.log(data)
+                                    setLoading()
                                 })
                                 .catch(err => {
                                     console.log(err)
+                                    setLoading()
                                 })
                         }
                     },

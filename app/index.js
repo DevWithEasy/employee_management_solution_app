@@ -18,7 +18,7 @@ export default function Page() {
       <View>
         <Image
         source={require('../assets/logo.png')}
-        className='w-20 h-16 mx-auto'
+        className='mt-5 w-24 h-20 mx-auto'
       />
       <AppText
         styles='text-2xl font-bold text-center text-red-500'
