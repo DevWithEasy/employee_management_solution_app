@@ -21,8 +21,8 @@ export default function SalaryCheck() {
     fetch(`${api_endpoint}?v=salary_check&section=${section.value}&id=${id}`)
       .then(res => res.json())
       .then(data => {
-        setSection({ label: data.data.section, value: data.data.section })
-        setEmployee(data.data)
+        setSection({ label: data.section, value: data.section })
+        setEmployee(data.info)
         setLoading()
       })
       .catch(err => {
