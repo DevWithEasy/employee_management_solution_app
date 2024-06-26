@@ -41,10 +41,16 @@ export default function RootLayout() {
                     title: 'Attendance Taker'
                 }}
             />
-             <Stack.Screen
+            <Stack.Screen
                 name='update'
                 options={{
                     title: 'Update Employee'
+                }}
+            />
+            <Stack.Screen
+                name='login'
+                options={{
+                    headerShown: false
                 }}
             />
         </Stack>

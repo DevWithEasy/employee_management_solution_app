@@ -6,7 +6,6 @@ import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
 import useAppStore from '../store/useStore'
 import Loading from '../components/Loading'
 import AppText from '../components/AppText'
-import convertToArray from '../utils/convertToArray'
 import SalaryInfo from '../components/SalaryInfo'
 import getFixedNumber from '../utils/getFixedNumber'
 

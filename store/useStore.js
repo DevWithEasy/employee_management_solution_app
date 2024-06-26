@@ -7,7 +7,7 @@ const appStore = (set) => ({
         set((state) => ({
             loading : state.loading ? false : true
         }))
-    }
+    },
 })
 const useAppStore = create(
     devtools(appStore)
