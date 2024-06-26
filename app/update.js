@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import api_endpoint from '../utils/api'
 import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
@@ -58,7 +58,11 @@ export default function Update() {
       .then(res => res.json())
       .then(data => {
         setLoading()
-        console.log(data)
+        if(data.success){
+          return Alert.alert('Successfully Updated.','Employee Successfully Updated')
+        }else{
+          return Alert.alert('Failed.','Employee failed to updated')
+        }
       })
       .catch(err => {
         console.log(err)
@@ -128,7 +132,9 @@ export default function Update() {
           onSubmit={handleSubmit}
         />
         {name &&
-          <View>
+          <View
+            className='pb-10'
+          >
             <View className="py-2">
               <AppInput
                 value={name}

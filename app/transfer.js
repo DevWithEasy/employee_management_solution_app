@@ -35,8 +35,12 @@ export default function Update() {
                             fetch(`${api_endpoint}?v=transfer&from=${from.value}&to=${to.value}&id=${id}`)
                                 .then(res => res.json())
                                 .then(data => {
-                                    console.log(data)
                                     setLoading()
+                                    if (data.success) {
+                                        return Alert.alert('Successfully Transfer', 'Employee Transfer successfully')
+                                    } else {
+                                        return Alert.alert('Failed Transfer', 'Employee Transfer successfully')
+                                    }
                                 })
                                 .catch(err => {
                                     console.log(err)

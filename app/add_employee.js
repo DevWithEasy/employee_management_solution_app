@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import api_endpoint from "../utils/api";
 import AppSelectModal from "../components/AppSelectModal";
@@ -86,6 +86,7 @@ export default function AddEmployee() {
                 setMeal('')
                 setJoining(new Date())
                 setLoading()
+                Alert.alert('Successfully Added.','Employee Successfully Added')
             })
             .catch(err => {
                 console.error(err)
