@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Platform, Image, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImageBackgroundScreen from '../components/ImageBackgroundScreen'
 import Constant from 'expo-constants';
 import AppInput from '../components/AppInput';
@@ -9,6 +9,7 @@ import api_endpoint from '../utils/api';
 import Loading from '../components/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import AppText from '../components/AppText';
 
 export default function Login() {
     const router = useRouter()
@@ -36,6 +37,16 @@ export default function Login() {
                 setLoading()
             })
     }
+    useEffect(() => {
+        const getUser = async () => {
+          const user = await AsyncStorage.getItem('user')
+          console.log(user)
+          if (user) {
+            return router.push('/')
+          }
+        }
+        getUser()
+      })
     return (
         <ImageBackgroundScreen>
             <View
@@ -45,12 +56,22 @@ export default function Login() {
                 className='flex-1items-center'
             >
                 <View
-                    className='w-full px-4 pt-20 space-y-5'
+                    className='w-full px-4 pt-16 space-y-5'
                 >
-                    <Image
+                    <View
+                        className='flex-col items-center'
+                    >
+                        <Image
                         source={require('../assets/login_user.png')}
                         className='w-20 h-20 mx-auto'
                     />
+                    <AppText
+                        styles='text-center text-xl font-bold'
+                    >
+                        Administration
+                    </AppText>
+                    </View>
+                    
                     <View>
                         <AppInput
                             value={email}
